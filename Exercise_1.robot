@@ -1,19 +1,22 @@
+*** Settings ***
+Library           Collections
+
 *** Test Cases ***
 Average of numbers
-    ${avg_num}    Average    1    2    3    4    -5
-    ...    6
-    Log To Console    ${avg_num}
+    [Documentation]    Obliczanie średniej
+    ${result}    Average    1    2    3
+    Log To Console    ${result}
     Max Min    20    10
 
 *** Keywords ***
 Average
     [Arguments]    @{list_of_numbers}
-    ${sum}    Set Variable    0
+    ${sum}    Set Variable    ${0.0}
     ${len}    Get Length    ${list_of_numbers}
     : FOR    ${number}    IN    @{list_of_numbers}
-    \    ${sum}    Set Variable    ${${sum}+${number}}
-    ${avg}    Evaluate    float($sum)/$len
-    [Return]    ${avg}
+    \    ${sum}    Evaluate    ${sum}+${number}
+    ${result}    Evaluate    float($sum)/$len
+    [Return]    ${result}
 
 Max Min
     [Arguments]    ${number1}    ${number2}
