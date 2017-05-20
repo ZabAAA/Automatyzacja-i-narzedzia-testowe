@@ -1,0 +1,39 @@
+*** Settings ***
+
+Documentation	     Test suite created with FireRobot.
+Library	   Selenium2Library   15.0   5.0
+
+
+*** Variables ***
+
+${BROWSER} 	Chrome
+${locator-pl} 	/
+${locator-formularz-wyszukiwania-2} 	edit-submit
+${locator-for-journalists} 	/english/for-journalists
+${locator-contact} 	/english/contact
+${formularz-wyszukiwania-3} 	Search
+${locator-kontakt} 	xpath=.//h2[contains(normalize-space(.), 'Kontakt')]
+${locator-en} 	/eng
+${locator-formularz-wyszukiwania} 	edit-search-block-form--2
+
+
+*** Test Cases ***
+
+FireRobot Test Case
+    Open Browser  	http://www.wsb.pl/   	${BROWSER}
+    Location Should be  	http://www.wsb.pl/
+    Click Link   	${locator-en}
+    Location Should be  	http://www.wsb.pl/english/
+    Element text should be    css=.active>a    EN
+
+    Page Should Contain   	About WSB Group
+    Page Should Contain Link   	${locator-for-journalists}
+
+    Click Link   	${locator-contact}
+    
+   Input Text   	${locator-formularz-wyszukiwania}   	Students
+    Press Key   	${locator-formularz-wyszukiwania-2}   	\\13
+    Page Should Contain   	Search results
+
+    Click Link   	${locator-pl}
+    Wait Until Element Is Visible   	${locator-kontakt}
